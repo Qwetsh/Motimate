@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/motimate/static/css/main.36aa9c68.css",
-    "main.js": "/motimate/static/js/main.e950776c.js",
-    "static/js/453.3571905a.chunk.js": "/motimate/static/js/453.3571905a.chunk.js",
-    "index.html": "/motimate/index.html",
-    "main.36aa9c68.css.map": "/motimate/static/css/main.36aa9c68.css.map",
-    "main.e950776c.js.map": "/motimate/static/js/main.e950776c.js.map",
-    "453.3571905a.chunk.js.map": "/motimate/static/js/453.3571905a.chunk.js.map"
+    "main.css": "/Motimate/static/css/main.36aa9c68.css",
+    "main.js": "/Motimate/static/js/main.c7cf4a8a.js",
+    "static/js/453.3571905a.chunk.js": "/Motimate/static/js/453.3571905a.chunk.js",
+    "index.html": "/Motimate/index.html",
+    "main.36aa9c68.css.map": "/Motimate/static/css/main.36aa9c68.css.map",
+    "main.c7cf4a8a.js.map": "/Motimate/static/js/main.c7cf4a8a.js.map",
+    "453.3571905a.chunk.js.map": "/Motimate/static/js/453.3571905a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.36aa9c68.css",
-    "static/js/main.e950776c.js"
+    "static/js/main.c7cf4a8a.js"
   ]
 }
