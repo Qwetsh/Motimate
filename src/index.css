@@ -27,3 +27,28 @@ body, html, #root {
 .animate-shake {
   animation: shake 0.5s ease-in-out;
 }
+
+/* Pour tous les éléments avec overflow-y:auto */
+.scrollable-content::-webkit-scrollbar {
+  width: 8px; /* Largeur de la barre de défilement */
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+  background: #1c1c2d; /* Couleur de fond de la barre de défilement */
+  border-radius: 10px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6a0dad, #3b3b5f); /* Dégradé violet */
+  border-radius: 10px;
+}
+
+.scrollable-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7d3cb5, #4c4c71); /* Couleur au survol */
+}
+
+/* Styles de la barre de défilement pour Firefox */
+.scrollable-content {
+  scrollbar-width: thin; /* Épaisseur de la barre de défilement */
+  scrollbar-color: #6a0dad #1c1c2d; /* Couleurs: pouce et fond */
+}
