@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 /* index.css */
-
 body, html, #root {
   margin: 0;
   padding: 0;
@@ -23,6 +22,7 @@ body, html, #root {
   20%, 60% { transform: translateX(-5px); }
   40%, 80% { transform: translateX(5px); }
 }
+
 
 .animate-shake {
   animation: shake 0.5s ease-in-out;

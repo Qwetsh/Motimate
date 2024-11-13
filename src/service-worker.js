@@ -1,33 +1,34 @@
 /* eslint-disable no-restricted-globals */
 import { precacheAndRoute } from "workbox-precaching";
 
-const CACHE_NAME = "pwa-cache-v1";
-const urlsToCache = ["/", "/index.html", "/manifest.json"];
+// Utilisation de Workbox pour précacher les fichiers générés automatiquement par Webpack
 precacheAndRoute(self.__WB_MANIFEST);
 
-// Installer le Service Worker et mettre en cache les fichiers
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
+// Ajout d'un cache dynamique pour les autres requêtes non précachées
+self.addEventListener("fetch", (event) => {
+  // Vérifie que la requête est de type GET pour éviter les erreurs de mise en cache avec POST
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return (
+        response ||
+        fetch(event.request).then((fetchResponse) => {
+          return caches.open("dynamic-cache-v1").then((cache) => {
+            cache.put(event.request, fetchResponse.clone());
+            return fetchResponse;
+          });
+        })
+      );
     })
   );
 });
 
-
-
-// Intercepter les requêtes pour servir le contenu depuis le cache
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-      caches.match(event.request).then((response) => {
-        return response || fetch(event.request);
-      })
-    );
-  });
-  
-// Mise à jour du cache
+// Gestion de l'activation du service worker pour nettoyer les caches obsolètes
 self.addEventListener("activate", (event) => {
-  const cacheWhitelist = [CACHE_NAME];
+  const cacheWhitelist = ["pwa-cache-v1", "dynamic-cache-v1"];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(

@@ -6,7 +6,7 @@ function LoginSignup({ onSignupSuccess, onLoginSuccess }) {
   const [showSignupModal, setShowSignupModal] = useState(false); // État pour gérer l'affichage de la modale d'inscription
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-darkBg text-white p-6">
+    <div className="flex flex-col items-center justify-center bg-darkBg text-white p-6">
       <h1 className="text-4xl font-bold mb-8 text-center">Bienvenue</h1>
 
       {/* Section Connexion */}
