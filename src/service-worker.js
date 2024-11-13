@@ -14,6 +14,8 @@ self.addEventListener("install", (event) => {
   );
 });
 
+
+
 // Intercepter les requêtes pour servir le contenu depuis le cache
 self.addEventListener('fetch', (event) => {
     event.respondWith(

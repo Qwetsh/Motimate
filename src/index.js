@@ -4,18 +4,20 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/service-worker.js").then(
-      (registration) => {
-        console.log("Service Worker enregistré avec succès :", registration);
-      },
-      (error) => {
+// Si l'application est en production
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/Motimate/src/service-worker.js')
+      .then((registration) => {
+        console.log('Service Worker enregistré avec succès :', registration);
+      })
+      .catch((error) => {
         console.log("Échec de l'enregistrement du Service Worker :", error);
-      }
-    );
+      });
   });
 }
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
