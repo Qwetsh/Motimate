@@ -11,7 +11,6 @@ function LoginSignup({ onSignupSuccess, onLoginSuccess }) {
 
       {/* Section Connexion */}
       <div className="w-full max-w-md bg-gradient-to-r from-purple-600 to-indigo-600 p-6 rounded-lg shadow-lg mb-6">
-        <h2 className="text-2xl font-semibold text-center mb-4">Connexion</h2>
         <Login onLoginSuccess={onLoginSuccess} />
       </div>
 

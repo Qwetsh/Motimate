@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, addDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 import StoreOverlay from './StoreOverlay';
 import PurchaseHistoryOverlay from './PurchaseHistoryOverlay';
@@ -58,9 +58,8 @@ function Store({ user, setUser }) {
       };
 
       try {
-        await addDoc(collection(db, "purchases"), newPurchase);
-
-        setPurchases([...purchases, { id: purchases.length + 1, ...newPurchase }]);
+        const purchaseRef = await addDoc(collection(db, "purchases"), newPurchase);
+        setPurchases([...purchases, { id: purchaseRef.id, ...newPurchase }]);
         setNewPurchaseName('');
         setNewPurchaseCost('');
         setIsAddingPurchase(false);
@@ -70,18 +69,26 @@ function Store({ user, setUser }) {
     }
   };
 
+  // Fonction pour gérer la suppression d'un achat
+  const handleDeletePurchase = async (purchaseId) => {
+    try {
+      await deleteDoc(doc(db, "purchases", purchaseId));
+      setPurchases((prevPurchases) => prevPurchases.filter((purchase) => purchase.id !== purchaseId));
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'achat :", error);
+    }
+  };
+
   return (
     <div className="w-full max-w-md mx-auto mt-6">
       <h3 className="text-lg font-semibold mb-4 text-center">Magasin</h3>
 
-      {/* Affichage du message d'achat */}
       {message && (
         <div className="text-center mb-4 text-sm font-semibold text-neonBlue">
           {message}
         </div>
       )}
 
-      {/* Bouton pour voir l'historique des achats */}
       <div className="text-right mb-4">
         <button
           onClick={() => setIsHistoryOpen(true)}
@@ -91,31 +98,39 @@ function Store({ user, setUser }) {
         </button>
       </div>
 
-      {/* Affichage de la liste des achats */}
       <div className="grid grid-cols-3 gap-4 mb-4">
         {purchases.map((purchase) => (
           <div
             key={purchase.id}
             onClick={() => setSelectedPurchase(purchase)}
-            className="flex flex-col items-center bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl p-4 shadow-lg cursor-pointer transform hover:scale-105 transition duration-300"
+            className="relative flex flex-col items-center bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl p-4 shadow-lg cursor-pointer transform hover:scale-105 transition duration-300"
           >
             <span className="text-sm font-bold">{purchase.name}</span>
             <span className="text-xs font-semibold bg-neonBlue text-darkBg rounded-full px-2 py-0.5 mt-2">
               {purchase.cost} coins
             </span>
+
+            {/* Bouton de suppression pour chaque achat */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // Empêcher la propagation pour éviter la sélection d'achat
+                handleDeletePurchase(purchase.id);
+              }}
+              className="absolute top-2 right-2 text-white p-1 rounded-full hover:bg-red-600 transition duration-200"
+            >
+              X
+            </button>
           </div>
         ))}
 
-        {/* Bouton "Ajouter un achat" avec le même design */}
         <div
           onClick={() => setIsAddingPurchase(true)}
           className="flex flex-col items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-2xl p-4 shadow-lg cursor-pointer transform hover:scale-105 transition duration-300"
         >
-          <span className="text-sm font-bold">+ Ajouter un achat</span>
+          <span className="text-sm font-bold absolute top 1 right 1">Ajouter un achat</span>
         </div>
       </div>
 
-      {/* Overlay pour ajouter un nouvel achat */}
       {isAddingPurchase && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4">
           <div className="bg-darkBg p-6 rounded-lg shadow-lg w-full max-w-xs text-white">
@@ -152,7 +167,6 @@ function Store({ user, setUser }) {
         </div>
       )}
 
-      {/* Overlay pour confirmer un achat */}
       {selectedPurchase && (
         <StoreOverlay
           item={selectedPurchase}
@@ -161,7 +175,6 @@ function Store({ user, setUser }) {
         />
       )}
 
-      {/* Overlay pour afficher l'historique des achats */}
       {isHistoryOpen && (
         <PurchaseHistoryOverlay
           username={user.username}

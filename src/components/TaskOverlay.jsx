@@ -7,7 +7,7 @@ function TaskOverlay({ task, onConfirm, onClose }) {
         <h3 className="text-lg font-bold">Confirmer la tâche</h3>
         <p>Valider <span className="text-neonBlue font-semibold">{task.name}</span> et gagner {task.reward} coins ?</p>
         <button
-          onClick={onConfirm}
+          onClick={(e) => onConfirm(e)} // Passe l'événement de clic
           className="w-full px-4 py-2 bg-neonBlue rounded-full shadow-neomorph hover:bg-neonPink transition duration-300 text-white"
         >
           Valider
