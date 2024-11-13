@@ -14,10 +14,10 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/",
+  "start_url": "/Motimate/",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/Motimate/",
   "theme_color": "#6200ea",
   "orientation": "portrait-primary"
 }
