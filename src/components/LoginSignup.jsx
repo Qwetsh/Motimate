@@ -7,7 +7,7 @@ function LoginSignup({ onSignupSuccess, onLoginSuccess }) {
 
   return (
     <div className="flex flex-col items-center justify-center bg-darkBg text-white p-6">
-      <h1 className="text-4xl font-bold mb-8 text-center">Bienvenue</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">Bienvenue !!!</h1>
 
       {/* Section Connexion */}
       <div className="w-full max-w-md bg-gradient-to-r from-purple-600 to-indigo-600 p-6 rounded-lg shadow-lg mb-6">
