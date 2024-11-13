@@ -1,7 +1,9 @@
 /* eslint-disable no-restricted-globals */
+import { precacheAndRoute } from "workbox-precaching";
 
 const CACHE_NAME = "pwa-cache-v1";
 const urlsToCache = ["/", "/index.html", "/manifest.json"];
+precacheAndRoute(self.__WB_MANIFEST);
 
 // Installer le Service Worker et mettre en cache les fichiers
 self.addEventListener("install", (event) => {
@@ -13,14 +15,14 @@ self.addEventListener("install", (event) => {
 });
 
 // Intercepter les requêtes pour servir le contenu depuis le cache
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
-});
-
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+      caches.match(event.request).then((response) => {
+        return response || fetch(event.request);
+      })
+    );
+  });
+  
 // Mise à jour du cache
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [CACHE_NAME];
